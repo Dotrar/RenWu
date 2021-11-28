@@ -64,7 +64,7 @@ local function get_first_empty_slot()
 end
 
 M.command = function(input_string)
-    if input_string == "" then
+    if (#input_string==0) then
         M.toggle_menu()
     else
         M.add_new_item(input_string)

@@ -1,1 +1,1 @@
-command! -nargs=? RenWu lua require'renwu.ui'.command("<args>")
+command! -nargs=? RenWu lua require'renwu.ui'.command([[<args>]])<cr>
