@@ -25,5 +25,5 @@ nnoremap <leader>` :RenWu<cr>
 
 When called with string arguments, the command will add the string as a new line to your todo list
 
-The todolist buffer acts as normal, so you can re-arrange with ddP and etc. Markdown syntax supported
+The todolist buffer acts as normal, so you can re-arrange with `ddP` and etc. Markdown syntax supported
 Config is relatively easy and simple
