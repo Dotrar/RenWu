@@ -16,11 +16,14 @@ call plug#begin(stdpath('data') . '/plugged')
 Plug 'Dotrar/Renwu'
 call plug#end() 
 
-" Make a mapping with a space at the end.
+" Make a mapping with a space at the end, acts as a prompt for new items.
 nnoremap <leader>g :RenWu<space>
 
-" Empty command means to show menu
+" Empty command means to show menu (<space> is ignored, so safe to just use the one mapping)
 nnoremap <leader>` :RenWu<cr>
 ```
 
 When called with string arguments, the command will add the string as a new line to your todo list
+
+The todolist buffer acts as normal, so you can re-arrange with ddP and etc. Markdown syntax supported
+Config is relatively easy and simple
