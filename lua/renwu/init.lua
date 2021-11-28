@@ -11,13 +11,8 @@
 local path = require("plenary.path")
 local config_path = vim.fn.stdpath('config')
 local data_path = vim.fn.stdpath('data')
-local user_config = string.format("%s/renwu.json", config_path)
-local cache_config = string.format("%s/renwu.json", data_path)
-
-
--- this file is not loaded seperately, but actually as part of
--- the loading of other system aspects, such as the menu-ui, which
--- will call this function to load some sensible default
+local user_config_path = string.format("%s/renwu.json", config_path)
+local cache_config_path = string.format("%s/renwu.json", data_path)
 
 RenWuConfig = RenWuConfig or {}
 
@@ -31,10 +26,6 @@ local function ensure_config(config)
         config.window = {}
     end
     return config
-end
-
-M.save = function()
-    path:new(cache_config):write(vim.fn.json_encode(RenWuConfig),"w")
 end
 
 local function load_config(lpath)
@@ -63,26 +54,35 @@ local function merge_tables(...)
     return out
 end
 
-M.setup = function(config)
-    if not config then config = {} end
+local function protected_load_config(...)
+    local ok, config = pcall(load_config, ...)
+    if not ok then config = {} end
+    return config
+end
 
-    local ok, u_config = pcall(load_config, user_config)
-    if not ok then u_config = {} end
 
-    local ok2, c_config = pcall(load_config, cache_config)
-    if not ok2 then c_config = {} end
+M.save = function()
+    path:new(cache_config_path):write(vim.fn.json_encode(RenWuConfig), "w")
+end
 
-    --combine loaded cache and user config
-    local complete_config = merge_tables({
-            window = { },
-        },
-        u_config,
-        c_config,
-        config
-        )
+M.setup = function(given_config)
+    local user_config = protected_load_config(user_config_path)
+    local cache_config = protected_load_config(cache_config_path)
+    local complete_config = merge_tables(user_config, cache_config, given_config or {})
 
     -- make sure good values are present
     RenWuConfig = ensure_config(complete_config)
+
+    -- set up commands
+    vim.api.nvim_create_user_command("RenWu", function(opt)
+        local args = opt.args
+        local renwu = require 'renwu.ui'
+        if args == nil then
+            renwu.toggle_menu()
+        else
+            renwu.command(args)
+        end
+    end, { nargs = '?' })
 end
 
 M.get_window_config = function()
@@ -92,8 +92,5 @@ end
 M.get_todo_items = function()
     return ensure_config(RenWuConfig).todo_items
 end
-
-M.setup()
-
 
 return M
