@@ -8,6 +8,7 @@ Special thanks goes out to ThePrimeagen, for which I learnt how to rip off his c
 and others who helped on irc and discord.
 
 ## Screenshot
+![image](https://github.com/Dotrar/RenWu/assets/1199335/a2786538-3d7e-412b-91ef-c216eb5220cb)
 
 ## Install
 
