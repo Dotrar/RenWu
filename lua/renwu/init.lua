@@ -2,11 +2,6 @@
 -- RenWu 任务
 --
 -- Simple todo list that follows your work :)
---
--- Author: Dre.K.Westcook
---
--- Shoutout to theprimeagen for which
--- I mainly ripped off his code
 
 local path = require("plenary.path")
 local config_path = vim.fn.stdpath('config')
@@ -16,7 +11,7 @@ local cache_config_path = string.format("%s/renwu.json", data_path)
 
 RenWuConfig = RenWuConfig or {}
 
-M = {}
+local M = {}
 
 local function ensure_config(config)
     if config.todo_items == nil then

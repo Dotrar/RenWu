@@ -31,7 +31,6 @@ or lazy.nvim (shown here with custom config):
                     width = 60,
                     height = 15,
                     title = "任务～ TODO ～你好",
-                    borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" }
                 },
             })
         end },
@@ -57,9 +56,10 @@ Config is relatively easy and simple
 
 `q` or `<esc>` in normal mode will close the window
 
-## Colours
+## Colours (not-yet-implemented)
 
-You can change the colour by adjusting the `RenWuBorder` highlight group
+You can change the colour by adjusting the `RenWuBorder` highlight group.
+(Note! this is currently not enabled -- send a PR if you want this feature!)
 ```lua
 vim.cmd([[highlight! RenWuBorder guifg=#FF0033 guibg=NONE]])
 ```

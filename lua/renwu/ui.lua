@@ -1,5 +1,4 @@
 local renwu = require('renwu')
-local popup = require('plenary.popup')
 
 local M = {}
 
@@ -18,20 +17,21 @@ local function create_window()
     local height = config.height or 15
     local title = config.title or "任务 Todo"
 
-    local borderchars = config.borderchars
-        or { "─", "│", "─", "│", "╭", "╮", "╯", "╰" }
-
     local bufnr = vim.api.nvim_create_buf(false, false)
 
-    local cmd_win, _ = popup.create(bufnr, {
-        title = title,
-        borderhighlight = "RenWuBorder",
-        line = math.floor(((vim.o.lines - height) / 2) - 1),
-        col = math.floor((vim.o.columns - width) / 2),
-        minwidth = width,
-        minheight = height,
-        borderchars = borderchars,
-    })
+    local cmd_win = vim.api.nvim_open_win(bufnr,
+        true,
+        {
+            relative = 'editor',
+            width = width,
+            height = height,
+            zindex = 120,
+            row = math.floor(((vim.o.lines - height) / 2) - 1),
+            col = math.floor((vim.o.columns - width) / 2),
+            style = 'minimal',
+            border = 'rounded',
+            title = title,
+        })
 
     vim.wo.wrap = true
     vim.wo.winhl = "Normal:RenWuWindow"
